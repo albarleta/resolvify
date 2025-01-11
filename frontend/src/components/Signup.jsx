@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-export default function LoginPage() {
+export default function SignUpPage() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",

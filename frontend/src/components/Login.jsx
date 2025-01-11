@@ -97,7 +97,7 @@ export default function LoginPage() {
             >
               Login
             </button>
-            <p>Don't have an account yet?</p>
+            {/* <p>Don't have an account yet?</p> */}
             <Link to="/signup" classname="signupbutton">
               {" "}
               Sign up
