@@ -1,14 +1,24 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 export default function LoginPage() {
   const [formData, setFormData] = useState({
-    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+
+    const { data, status } = await axios.post(
+      "http://192.168.1.169/api/login",
+      formData,
+    );
+
+    if (status === 200) {
+      localStorage.setItem("user", data);
+    }
   };
 
   return (
@@ -27,6 +37,56 @@ export default function LoginPage() {
 
           {/* Login form */}
           <form onSubmit={handleSubmit} className="w-full space-y-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="USERNAME"
+                value={formData.username}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, username: e.target.value }))
+                }
+                className="w-full rounded bg-blue-500/30 px-4 py-3 pl-10 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              />
+              <svg
+                className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="USERNAME"
+                value={formData.username}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, username: e.target.value }))
+                }
+                className="w-full rounded bg-blue-500/30 px-4 py-3 pl-10 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
+              />
+              <svg
+                className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-blue-200"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+            </div>
+
             <div className="relative">
               <input
                 type="text"

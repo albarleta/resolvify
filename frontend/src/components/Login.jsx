@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -6,8 +8,22 @@ export default function LoginPage() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { data, status } = await axios.post(
+      "http://192.168.1.169/api/login",
+      formData,
+    );
+
+    if (status === 200) {
+      localStorage.setItem("user", data);
+    }
+
     // Handle login logic here
   };
 
@@ -32,9 +48,8 @@ export default function LoginPage() {
                 type="text"
                 placeholder="USERNAME"
                 value={formData.username}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, username: e.target.value }))
-                }
+                name="username"
+                onChange={handleChange}
                 className="w-full rounded bg-blue-500/30 px-4 py-3 pl-10 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               />
               <svg
@@ -56,10 +71,9 @@ export default function LoginPage() {
               <input
                 type="password"
                 placeholder="PASSWORD"
+                name="password"
                 value={formData.password}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, password: e.target.value }))
-                }
+                onChange={handleChange}
                 className="w-full rounded bg-blue-500/30 px-4 py-3 pl-10 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/50"
               />
               <svg
@@ -83,6 +97,11 @@ export default function LoginPage() {
             >
               Login
             </button>
+            <p>Don't have an account yet?</p>
+            <Link to="/signup" classname="signupbutton">
+              {" "}
+              Sign up
+            </Link>
           </form>
         </div>
       </div>
